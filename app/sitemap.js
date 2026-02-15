@@ -26,12 +26,16 @@ export default function sitemap() {
     },
   ];
 
-  const categoryPages = categories.map(cat => ({
-    url: `${baseUrl}/seniors/${cat.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
+  // Only include categories that have businesses
+  const categorySlugsWithBusinesses = new Set(businesses.map(b => b.category));
+  const categoryPages = categories
+    .filter(cat => categorySlugsWithBusinesses.has(cat.slug))
+    .map(cat => ({
+      url: `${baseUrl}/seniors/${cat.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    }));
 
   const cityPages = cities.map(city => ({
     url: `${baseUrl}/seniors/${city.slug}`,

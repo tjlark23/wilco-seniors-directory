@@ -35,6 +35,11 @@ function formatDate(dateStr) {
 export default function ReviewsList({ reviews, rating, reviewCount }) {
   const [showAll, setShowAll] = useState(false);
 
+  // Hide entire reviews section when we have no actual review text to show
+  if (!reviews || reviews.length === 0) {
+    return null;
+  }
+
   const fullStars = Math.floor(rating || 0);
   const hasHalf = (rating || 0) - fullStars >= 0.5;
   const starsStr = '★'.repeat(fullStars) + (hasHalf ? '☆' : '') + '☆'.repeat(Math.max(0, 5 - fullStars - (hasHalf ? 1 : 0)));
@@ -57,49 +62,43 @@ export default function ReviewsList({ reviews, rating, reviewCount }) {
         </div>
 
         {/* Individual Reviews */}
-        {reviews.length > 0 && (
-          <div className="reviews-list">
-            {displayedReviews.map((review, i) => (
-              <div key={i} className="review-card">
-                <div className="review-header">
-                  <div className="review-author-info">
-                    <div className="review-avatar">
-                      {review.author ? review.author.charAt(0).toUpperCase() : '?'}
-                    </div>
-                    <div>
-                      <div className="review-author">{review.author || 'Anonymous'}</div>
-                      <div className="review-date">{formatDate(review.date)}</div>
-                    </div>
+        <div className="reviews-list">
+          {displayedReviews.map((review, i) => (
+            <div key={i} className="review-card">
+              <div className="review-header">
+                <div className="review-author-info">
+                  <div className="review-avatar">
+                    {review.author ? review.author.charAt(0).toUpperCase() : '?'}
                   </div>
-                  <StarDisplay rating={review.rating} />
+                  <div>
+                    <div className="review-author">{review.author || 'Anonymous'}</div>
+                    <div className="review-date">{formatDate(review.date)}</div>
+                  </div>
                 </div>
-                <p className="review-text">{review.text}</p>
+                <StarDisplay rating={review.rating} />
               </div>
-            ))}
+              <p className="review-text">{review.text}</p>
+            </div>
+          ))}
 
-            {hasMore && !showAll && (
-              <button
-                className="reviews-view-more"
-                onClick={() => setShowAll(true)}
-              >
-                View {reviews.length - initialCount} More Review{reviews.length - initialCount > 1 ? 's' : ''}
-              </button>
-            )}
+          {hasMore && !showAll && (
+            <button
+              className="reviews-view-more"
+              onClick={() => setShowAll(true)}
+            >
+              View {reviews.length - initialCount} More Review{reviews.length - initialCount > 1 ? 's' : ''}
+            </button>
+          )}
 
-            {showAll && hasMore && (
-              <button
-                className="reviews-view-more"
-                onClick={() => setShowAll(false)}
-              >
-                Show Less
-              </button>
-            )}
-          </div>
-        )}
-
-        {reviews.length === 0 && (
-          <p className="reviews-empty">No reviews yet. Be the first to leave a review!</p>
-        )}
+          {showAll && hasMore && (
+            <button
+              className="reviews-view-more"
+              onClick={() => setShowAll(false)}
+            >
+              Show Less
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

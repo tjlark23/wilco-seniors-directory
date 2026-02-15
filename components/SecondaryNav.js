@@ -9,7 +9,6 @@ const categories = [
   { label: 'Senior Living', slug: '/seniors/senior-living' },
   { label: 'Active Lifestyle', slug: '/seniors/pickleball' },
   { label: 'Financial & Legal', slug: '/seniors/estate-planning' },
-  { label: 'Home Services', slug: '/seniors/home-modification' },
   { label: 'Dining', slug: '/seniors/restaurants' },
   { label: 'Community', slug: '/seniors/senior-centers' },
 ];

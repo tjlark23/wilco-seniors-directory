@@ -38,6 +38,16 @@ export default function BusinessProfilePage({ params }) {
   const priceActive = business.priceRange || '$$';
   const priceDisplay = priceActive + '$'.repeat(Math.max(0, 4 - priceActive.length));
 
+  // Deduplicate photos by base URL (before size params like =w800-h500)
+  const allPhotos = business.photos || [];
+  const seenBases = new Set();
+  const uniquePhotos = allPhotos.filter(url => {
+    const base = url.split('=')[0];
+    if (seenBases.has(base)) return false;
+    seenBases.add(base);
+    return true;
+  });
+
   const businessSchema = generateLocalBusinessSchema(business);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: 'https://wilcoguide.com' },
@@ -61,12 +71,13 @@ export default function BusinessProfilePage({ params }) {
       <div className="profile-page">
         {/* Gallery */}
         <div className="gallery-section">
-          <div className="gallery-grid">
-            {(business.photos || []).slice(0, 5).map((photo, i) => (
+          <div className={`gallery-grid${uniquePhotos.length === 1 ? ' gallery-single' : ''}`}>
+            {uniquePhotos.slice(0, 5).map((photo, i) => (
               <div key={i} className={`gallery-item${i === 0 ? ' gallery-hero' : ''}`}>
                 <img src={photo} alt={`${business.name} photo ${i + 1}`} />
-                {i === 0 && <div className="gallery-video-badge">▶ Video Tour</div>}
-                {i === 4 && <div className="gallery-count">+{Math.max(0, (business.photos || []).length - 5)} more</div>}
+                {i === 4 && (business.photos || []).length > 5 && (
+                  <div className="gallery-count">+{(business.photos || []).length - 5} more</div>
+                )}
               </div>
             ))}
           </div>

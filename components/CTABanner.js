@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function CTABanner() {
   return (
     <div className="cta-banner">
@@ -8,7 +10,7 @@ export default function CTABanner() {
           thousands of seniors and their families across Williamson County.
         </p>
       </div>
-      <button className="cta-button">List Your Business</button>
+      <Link href="/seniors/get-listed" className="cta-button">List Your Business</Link>
     </div>
   );
 }

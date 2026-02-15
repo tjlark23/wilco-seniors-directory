@@ -1,6 +1,6 @@
 import { getCategories, getCategoryBySlug } from '../../../lib/getCategories';
 import { getCities, getCityBySlug } from '../../../lib/getCities';
-import { getBusinessesByCategory, getBusinessesByCity } from '../../../lib/getBusinesses';
+import { getBusinesses, getBusinessesByCategory, getBusinessesByCity } from '../../../lib/getBusinesses';
 import { getFAQsByCategory } from '../../../lib/getFAQs';
 import BusinessCard from '../../../components/BusinessCard';
 import FAQSection from '../../../components/FAQSection';
@@ -15,8 +15,14 @@ import Link from 'next/link';
 export function generateStaticParams() {
   const categories = getCategories();
   const cities = getCities();
+  const allBusinesses = getBusinesses();
+
+  // Only generate pages for categories that have at least one business
+  const categorySlugsWithBusinesses = new Set(allBusinesses.map(b => b.category));
+  const nonEmptyCategories = categories.filter(c => categorySlugsWithBusinesses.has(c.slug));
+
   return [
-    ...categories.map(c => ({ cityOrCategory: c.slug })),
+    ...nonEmptyCategories.map(c => ({ cityOrCategory: c.slug })),
     ...cities.map(c => ({ cityOrCategory: c.slug })),
   ];
 }

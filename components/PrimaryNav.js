@@ -16,7 +16,7 @@ export default function PrimaryNav() {
         <a href="#" className="nav-section-link">Deals</a>
       </div>
       <div className="nav-right">
-        <button className="nav-subscribe">Subscribe Free</button>
+        <a href="https://www.wilcoseniors.com/subscribe" target="_blank" rel="noopener noreferrer" className="nav-subscribe">Subscribe Free</a>
       </div>
     </nav>
   );
