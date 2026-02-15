@@ -256,6 +256,12 @@ export default function BusinessProfilePage({ params }) {
           </div>
         </div>
 
+        {/* Claim Listing CTA */}
+        <div className="claim-listing-cta">
+          <p>Is this your business? Manage your listing and reach more seniors.</p>
+          <Link href="/seniors/get-listed">Get Listed on WilCo Seniors →</Link>
+        </div>
+
         {/* Related Businesses Grid */}
         {related.length > 0 && (
           <>

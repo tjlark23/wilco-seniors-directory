@@ -6,21 +6,60 @@ function renderStars(rating) {
   return '\u2605'.repeat(full) + '\u2606'.repeat(empty);
 }
 
+const categoryColors = {
+  'in-home-care': '#3589ff',
+  'memory-care': '#3589ff',
+  'primary-care': '#3589ff',
+  'physical-therapy': '#3589ff',
+  'hearing-vision': '#3589ff',
+  'dental': '#3589ff',
+  'mental-health': '#3589ff',
+  'pharmacy': '#3589ff',
+  'hospice': '#3589ff',
+  'senior-living': '#eb7b1c',
+  'estate-planning': '#8b5cf6',
+  'financial-advisors': '#8b5cf6',
+  'medicare': '#8b5cf6',
+  'elder-law': '#8b5cf6',
+  'tax-preparation': '#8b5cf6',
+  'reverse-mortgage': '#8b5cf6',
+  'pickleball': '#10b981',
+  'fitness': '#10b981',
+  'golf': '#10b981',
+  'swimming': '#10b981',
+  'walking': '#10b981',
+  'dance': '#10b981',
+  'yoga': '#10b981',
+  'home-modification': '#f59e0b',
+  'lawn-care': '#f59e0b',
+  'handyman': '#f59e0b',
+  'house-cleaning': '#f59e0b',
+  'senior-centers': '#ec4899',
+  'volunteer': '#ec4899',
+  'religious': '#ec4899',
+  'transportation': '#ef4444',
+  'restaurants': '#ec4899',
+};
+
+export function getCategoryColor(slug) {
+  return categoryColors[slug] || '#3589ff';
+}
+
 export default function BusinessCard({ business }) {
   const {
     name,
     slug,
     category,
     city,
-    shortDescription,
     rating,
     reviewCount,
     photos,
     tags,
-    priceRange,
   } = business;
 
   const photoUrl = photos && photos.length > 0 ? photos[0] : null;
+  const catColor = getCategoryColor(category);
+  const catName = business.categoryName || category;
 
   return (
     <Link href={`/seniors/directory/${slug}`} className="biz-card row-card">
@@ -48,20 +87,21 @@ export default function BusinessCard({ business }) {
         </div>
       )}
       <div className="card-info">
-        <div className="card-category">{business.categoryName || category}</div>
         <div className="card-name">{name}</div>
-        {shortDescription && (
-          <div className="card-desc">{shortDescription}</div>
-        )}
         {city && <div className="card-location">{city}</div>}
-        {rating != null && (
-          <div className="card-rating">
-            <span className="stars">{renderStars(rating)}</span>
-            {reviewCount != null && (
-              <span className="rating-count">({reviewCount})</span>
-            )}
-          </div>
-        )}
+        <div className="card-bottom-bar">
+          {rating != null && (
+            <div className="card-rating">
+              <span className="stars">{renderStars(rating)}</span>
+              {reviewCount != null && (
+                <span className="rating-count">({reviewCount})</span>
+              )}
+            </div>
+          )}
+          <span className="card-cat-pill" style={{ backgroundColor: catColor }}>
+            {catName}
+          </span>
+        </div>
       </div>
     </Link>
   );

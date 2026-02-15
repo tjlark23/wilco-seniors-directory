@@ -91,6 +91,8 @@ a { color: inherit; text-decoration: none; }
 .cat-btn-relocating:hover { border-color: var(--orange); color: var(--orange); background: #fff5e6; }
 .cat-btn-relocating.active { background: var(--orange); color: #fff; border-color: var(--orange); }
 .search-area { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.get-listed-btn { padding: 7px 14px; border-radius: 8px; border: none; background: #10b981; font-size: 13px; font-weight: 600; color: #fff; cursor: pointer; white-space: nowrap; transition: all 0.2s; font-family: inherit; }
+.get-listed-btn:hover { background: #059669; }
 .search-bar { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 7px 14px; min-width: 280px; transition: border-color 0.2s; }
 .search-bar:focus-within { border-color: var(--blue); background: #fff; }
 .search-bar svg { color: var(--text-muted); flex-shrink: 0; }
@@ -147,21 +149,20 @@ a { color: inherit; text-decoration: none; }
 .card-media { position: absolute; inset: 0; overflow: hidden; }
 .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 .biz-card:hover .card-media img, .card-premium:hover .card-media img { transform: scale(1.06); }
-.card-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); pointer-events: none; }
-.card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; color: #fff; z-index: 2; }
-.card-premium .card-info { padding: 28px; }
-.card-category { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85; margin-bottom: 6px; }
-.card-premium .card-category { font-size: 12px; margin-bottom: 8px; }
-.card-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 18px; line-height: 1.2; margin-bottom: 4px; }
-.card-premium .card-name { font-size: 28px; margin-bottom: 8px; }
-.card-desc { font-size: 13px; opacity: 0.8; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.card-premium .card-desc { font-size: 15px; -webkit-line-clamp: 3; }
-.card-location { font-size: 12px; opacity: 0.7; margin-top: 4px; }
-.card-premium .card-location { font-size: 13px; margin-top: 6px; }
-.card-rating { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.card-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 55%; background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 45%, transparent 100%); pointer-events: none; }
+.card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 14px 16px; color: #fff; z-index: 2; }
+.card-premium .card-info { padding: 20px 24px; }
+.card-name { font-family: 'Fraunces', serif; font-weight: 700; font-size: 17px; line-height: 1.2; margin-bottom: 2px; }
+.card-premium .card-name { font-size: 26px; margin-bottom: 4px; }
+.card-location { font-size: 12px; opacity: 0.75; margin-bottom: 8px; }
+.card-premium .card-location { font-size: 13px; margin-bottom: 10px; }
+.card-bottom-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.card-rating { display: flex; align-items: center; gap: 5px; }
 .stars { color: var(--orange-light); font-size: 13px; letter-spacing: 1px; }
 .card-premium .stars { font-size: 15px; }
-.rating-count { font-size: 12px; opacity: 0.7; }
+.rating-count { font-size: 11px; opacity: 0.7; }
+.card-cat-pill { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #fff; padding: 3px 8px; border-radius: 4px; opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
+.card-premium .card-cat-pill { font-size: 11px; padding: 4px 10px; max-width: 180px; }
 
 /* Tags on cards */
 .card-tags { position: absolute; top: 14px; left: 14px; display: flex; gap: 6px; z-index: 3; flex-wrap: wrap; }
@@ -1404,4 +1405,45 @@ a { color: inherit; text-decoration: none; }
   .city-biz-grid { grid-template-columns: 1fr; }
   .other-cities-grid { grid-template-columns: 1fr; }
   .comparison-card-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════════════════════════════════════ GET LISTED PAGE ═══════════════════════════════════════════ */
+.get-listed-layout { display: grid; grid-template-columns: 1fr 340px; gap: 32px; max-width: 1100px; margin: 0 auto; padding: 0 0 48px; }
+.get-listed-header { margin-bottom: 28px; }
+.get-listed-title { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+.get-listed-sub { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+.get-listed-form { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 24px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group-full { grid-column: 1 / -1; }
+.form-label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.required { color: #ef4444; }
+.form-input { padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; color: var(--text-primary); background: var(--bg); transition: border-color 0.2s; }
+.form-input:focus { outline: none; border-color: var(--blue); background: #fff; }
+.form-textarea { resize: vertical; min-height: 100px; }
+.form-submit-btn { background: var(--blue); color: #fff; border: none; padding: 14px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; transition: background 0.2s; }
+.form-submit-btn:hover { background: #2a75e8; }
+.get-listed-sidebar { display: flex; flex-direction: column; gap: 20px; }
+.benefits-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+.benefits-list li { display: flex; gap: 12px; align-items: flex-start; }
+.benefit-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.benefits-list li strong { font-size: 14px; color: var(--text-primary); display: block; margin-bottom: 2px; }
+.benefits-list li p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+
+/* Thank you page */
+.thank-you-page { text-align: center; padding: 80px 20px; max-width: 520px; margin: 0 auto; }
+.thank-you-icon { font-size: 48px; margin-bottom: 16px; }
+.thank-you-title { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
+.thank-you-text { font-size: 15px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 28px; }
+.thank-you-actions { display: flex; gap: 12px; justify-content: center; }
+
+/* Get Listed CTA on business profiles */
+.claim-listing-cta { background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; text-align: center; margin-top: 32px; }
+.claim-listing-cta p { font-size: 14px; color: var(--text-secondary); margin-bottom: 10px; }
+.claim-listing-cta a { color: var(--blue); font-weight: 600; font-size: 14px; text-decoration: none; }
+.claim-listing-cta a:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .get-listed-layout { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { getCategoryColor } from './BusinessCard';
 
 function renderStars(rating) {
   const full = Math.floor(rating);
@@ -31,6 +32,8 @@ export default function PremiumCard({ businesses, cycleSpeed = 5000 }) {
       </div>
       {businesses.map((biz, index) => {
         const photoUrl = biz.photos && biz.photos.length > 0 ? biz.photos[0] : null;
+        const catColor = getCategoryColor(biz.category);
+        const catName = biz.categoryName || biz.category;
         return (
           <Link
             key={biz.slug}
@@ -61,20 +64,21 @@ export default function PremiumCard({ businesses, cycleSpeed = 5000 }) {
               </div>
             )}
             <div className="card-info">
-              <div className="card-category">{biz.categoryName || biz.category}</div>
               <div className="card-name">{biz.name}</div>
-              {biz.shortDescription && (
-                <div className="card-desc">{biz.shortDescription}</div>
-              )}
               {biz.city && <div className="card-location">{biz.city}</div>}
-              {biz.rating != null && (
-                <div className="card-rating">
-                  <span className="stars">{renderStars(biz.rating)}</span>
-                  {biz.reviewCount != null && (
-                    <span className="rating-count">({biz.reviewCount})</span>
-                  )}
-                </div>
-              )}
+              <div className="card-bottom-bar">
+                {biz.rating != null && (
+                  <div className="card-rating">
+                    <span className="stars">{renderStars(biz.rating)}</span>
+                    {biz.reviewCount != null && (
+                      <span className="rating-count">({biz.reviewCount})</span>
+                    )}
+                  </div>
+                )}
+                <span className="card-cat-pill" style={{ backgroundColor: catColor }}>
+                  {catName}
+                </span>
+              </div>
             </div>
           </Link>
         );

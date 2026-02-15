@@ -81,6 +81,12 @@ export default function SecondaryNav({ activeCategory = 'All', activeCity = 'All
         </button>
       </div>
       <div className="search-area">
+        <button
+          className="get-listed-btn"
+          onClick={() => router.push('/seniors/get-listed')}
+        >
+          + Get Listed
+        </button>
         <form className="search-bar" onSubmit={handleSearch}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" />
