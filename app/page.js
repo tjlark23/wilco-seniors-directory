@@ -1,5 +1,16 @@
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  redirect('/seniors');
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/seniors');
+  }, [router]);
+
+  return (
+    <meta httpEquiv="refresh" content="0;url=/seniors" />
+  );
 }
