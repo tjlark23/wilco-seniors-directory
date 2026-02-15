@@ -5,13 +5,13 @@ import { useRouter, usePathname } from 'next/navigation';
 
 const categories = [
   { label: 'All', slug: '/seniors' },
-  { label: 'Healthcare', slug: '/seniors/healthcare' },
+  { label: 'Healthcare', slug: '/seniors/in-home-care' },
   { label: 'Senior Living', slug: '/seniors/senior-living' },
-  { label: 'Active Lifestyle', slug: '/seniors/recreation' },
-  { label: 'Financial & Legal', slug: '/seniors/legal' },
-  { label: 'Home Services', slug: '/seniors/home-services' },
-  { label: 'Dining', slug: '/seniors/dining' },
-  { label: 'Community', slug: '/seniors/community' },
+  { label: 'Active Lifestyle', slug: '/seniors/pickleball' },
+  { label: 'Financial & Legal', slug: '/seniors/estate-planning' },
+  { label: 'Home Services', slug: '/seniors/home-modification' },
+  { label: 'Dining', slug: '/seniors/restaurants' },
+  { label: 'Community', slug: '/seniors/senior-centers' },
 ];
 
 const cities = [

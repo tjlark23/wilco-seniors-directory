@@ -4,15 +4,18 @@ export default function NewsletterCTA({ variant = 'sidebar' }) {
       <div className="newsletter-sidebar">
         <h3 className="ns-title">Stay connected to senior life in WilCo</h3>
         <p className="ns-sub">
-          Join thousands of 55+ Williamson County residents getting weekly
+          Join 15,000+ Williamson County residents getting weekly
           updates on local services, events, and deals.
         </p>
-        <input
-          type="email"
-          className="ns-input"
-          placeholder="Enter your email"
-        />
-        <button className="ns-btn">Subscribe Free</button>
+        <a
+          href="https://www.wilcoseniors.com/subscribe"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ns-btn"
+          style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}
+        >
+          Get the Free Weekly Newsletter
+        </a>
       </div>
     );
   }
@@ -23,20 +26,18 @@ export default function NewsletterCTA({ variant = 'sidebar' }) {
         Stay connected to senior life in WilCo
       </h3>
       <p className="ns-sub" style={{ fontSize: '14px', maxWidth: '480px' }}>
-        Join thousands of 55+ Williamson County residents getting weekly
+        Join 15,000+ Williamson County residents getting weekly
         updates on local services, events, and deals.
       </p>
-      <div style={{ display: 'flex', gap: '8px', maxWidth: '400px' }}>
-        <input
-          type="email"
-          className="ns-input"
-          placeholder="Enter your email"
-          style={{ marginBottom: 0, flex: 1 }}
-        />
-        <button className="ns-btn" style={{ width: 'auto', padding: '10px 24px', whiteSpace: 'nowrap' }}>
-          Subscribe Free
-        </button>
-      </div>
+      <a
+        href="https://www.wilcoseniors.com/subscribe"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="ns-btn"
+        style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none', padding: '12px 32px', whiteSpace: 'nowrap' }}
+      >
+        Get the Free Weekly Newsletter
+      </a>
     </div>
   );
 }
