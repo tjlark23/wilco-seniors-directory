@@ -3,6 +3,7 @@ import { getCategoryBySlug } from '../../../../lib/getCategories';
 import Breadcrumb from '../../../../components/Breadcrumb';
 import SchemaMarkup from '../../../../components/SchemaMarkup';
 import NewsletterCTA from '../../../../components/NewsletterCTA';
+import ReviewsList from '../../../../components/ReviewsList';
 import { generateLocalBusinessSchema, generateBreadcrumbSchema } from '../../../../lib/generateSchema';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -143,19 +144,12 @@ export default function BusinessProfilePage({ params }) {
               </div>
             </div>
 
-            {/* Reviews placeholder */}
-            <div className="widget">
-              <div className="widget-header"><h2 className="widget-title">Reviews</h2></div>
-              <div className="widget-body">
-                <div className="reviews-summary">
-                  <div className="reviews-big-num">{business.rating || 'N/A'}</div>
-                  <div>
-                    <div className="reviews-stars-big">{starsStr}</div>
-                    <div className="reviews-count-text">Based on {business.reviewCount || 0} reviews</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Reviews */}
+            <ReviewsList
+              reviews={business.reviews_list || []}
+              rating={business.rating}
+              reviewCount={business.reviewCount}
+            />
           </div>
 
           {/* Sidebar */}

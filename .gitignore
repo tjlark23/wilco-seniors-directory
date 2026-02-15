@@ -38,3 +38,9 @@ next-env.d.ts
 # claude
 .claude/
 nul
+
+# scraper data (raw/progress files)
+data/businesses_raw.json
+data/reviews_progress.json
+data/photos_progress.json
+scripts/
