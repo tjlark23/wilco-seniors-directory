@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const categories = [
   { label: 'All', slug: '/seniors' },
@@ -51,10 +52,6 @@ export default function SecondaryNav({ activeCategory = 'All', activeCity = 'All
     }
   }
 
-  function handleCategoryClick(slug) {
-    router.push(slug);
-  }
-
   function handleCitySelect(city) {
     setLocationOpen(false);
     router.push(city.slug);
@@ -64,28 +61,25 @@ export default function SecondaryNav({ activeCategory = 'All', activeCity = 'All
     <div className="secondary-nav">
       <div className="category-filters">
         {categories.map((cat) => (
-          <button
+          <Link
             key={cat.label}
-            className={`cat-btn${activeCategory === cat.label ? ' active' : ''}`}
-            onClick={() => handleCategoryClick(cat.slug)}
+            href={cat.slug}
+            className={`cat-pill${activeCategory === cat.label ? ' active' : ''}`}
           >
             {cat.label}
-          </button>
+          </Link>
         ))}
-        <button
-          className={`cat-btn cat-btn-relocating${pathname.startsWith('/seniors/relocating') ? ' active' : ''}`}
-          onClick={() => router.push('/seniors/relocating')}
+        <Link
+          href="/seniors/relocating"
+          className={`cat-pill cat-pill-relocating${pathname.startsWith('/seniors/relocating') ? ' active' : ''}`}
         >
           🏡 Relocating?
-        </button>
+        </Link>
       </div>
       <div className="search-area">
-        <button
-          className="get-listed-btn"
-          onClick={() => router.push('/seniors/get-listed')}
-        >
+        <Link href="/seniors/get-listed" className="get-listed-btn">
           + Get Listed
-        </button>
+        </Link>
         <form className="search-bar" onSubmit={handleSearch}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" />

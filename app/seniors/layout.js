@@ -1,5 +1,6 @@
 import PrimaryNav from '../../components/PrimaryNav';
 import SecondaryNav from '../../components/SecondaryNav';
+import ContextualBanner from '../../components/ContextualBanner';
 import Footer from '../../components/Footer';
 
 export default function SeniorsLayout({ children }) {
@@ -7,6 +8,7 @@ export default function SeniorsLayout({ children }) {
     <>
       <PrimaryNav />
       <SecondaryNav />
+      <ContextualBanner />
       {children}
       <Footer />
     </>
