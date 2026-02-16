@@ -102,17 +102,16 @@ export default function SeniorsDirectoryPage() {
       <SchemaMarkup schema={breadcrumbSchema} />
 
       <div className="directory-page">
+        {/* ══════════ Directory Hero Text Block ══════════ */}
+        <div className="directory-hero">
+          <h1 className="directory-hero-title">Senior Services Directory</h1>
+          <p className="directory-hero-subtitle">Trusted local businesses for seniors in Williamson County — healthcare, senior living, active lifestyle, financial planning, and more.</p>
+        </div>
+
         <TrendingBar />
 
         {/* ══════════ 1. Hero Section ══════════ */}
         <div className="spotlight-section">
-          <div className="spotlight-header">
-            <div className="spotlight-label">
-              <div className="spotlight-icon">★</div>
-              <div className="spotlight-title">Spotlight Businesses</div>
-            </div>
-          </div>
-
           <div className="hero-grid">
             {premiumBusinesses.length > 0 && (
               <PremiumCard businesses={premiumBusinesses} />
