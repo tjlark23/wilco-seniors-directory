@@ -4,7 +4,6 @@ import TrendingBar from '../../components/TrendingBar';
 import PremiumCard from '../../components/PremiumCard';
 import BusinessCard from '../../components/BusinessCard';
 import CategoryRow from '../../components/CategoryRow';
-import DealsStrip from '../../components/DealsStrip';
 import CTABanner from '../../components/CTABanner';
 import NewsletterCTA from '../../components/NewsletterCTA';
 import SchemaMarkup from '../../components/SchemaMarkup';
@@ -36,16 +35,6 @@ export default function SeniorsDirectoryPage() {
     const businesses = getBusinessesByCategory(slug).slice(0, 4);
     return { category: cat, businesses };
   }).filter(row => row.category && row.businesses.length > 0);
-
-  // Build deals from businesses that have deal tags
-  const deals = allBusinesses
-    .filter(b => b.tags && b.tags.some(t => t.toLowerCase().includes('deal') || t.toLowerCase().includes('off') || t.toLowerCase().includes('free')))
-    .slice(0, 6)
-    .map(b => ({
-      businessName: b.name,
-      offer: b.tags.find(t => t.toLowerCase().includes('deal') || t.toLowerCase().includes('off') || t.toLowerCase().includes('free')) || 'Special Offer',
-      slug: b.slug,
-    }));
 
   // Premium spotlight businesses (first 3 featured)
   const premiumBusinesses = featured.slice(0, 3);
@@ -100,9 +89,6 @@ export default function SeniorsDirectoryPage() {
             </div>
           </div>
         </div>
-
-        {/* Deals Strip */}
-        {deals.length > 0 && <DealsStrip deals={deals} />}
 
         {/* Category Rows */}
         {categoryRows.map(({ category, businesses }) => (

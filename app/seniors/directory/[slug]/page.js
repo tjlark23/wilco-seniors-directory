@@ -48,6 +48,11 @@ export default function BusinessProfilePage({ params }) {
     return true;
   });
 
+  // If ALL photos are Street View thumbnails, show single hero only
+  const allStreetView = uniquePhotos.length > 0 && uniquePhotos.every(url => url.includes('streetviewpixels'));
+  const galleryPhotos = allStreetView ? uniquePhotos.slice(0, 1) : uniquePhotos;
+  const useSingleHero = galleryPhotos.length <= 1;
+
   const businessSchema = generateLocalBusinessSchema(business);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: 'https://wilcoguide.com' },
@@ -71,12 +76,12 @@ export default function BusinessProfilePage({ params }) {
       <div className="profile-page">
         {/* Gallery */}
         <div className="gallery-section">
-          <div className={`gallery-grid${uniquePhotos.length === 1 ? ' gallery-single' : ''}`}>
-            {uniquePhotos.slice(0, 5).map((photo, i) => (
+          <div className={`gallery-grid${useSingleHero ? ' gallery-single' : ''}`}>
+            {galleryPhotos.slice(0, 5).map((photo, i) => (
               <div key={i} className={`gallery-item${i === 0 ? ' gallery-hero' : ''}`}>
                 <img src={photo} alt={`${business.name} photo ${i + 1}`} />
-                {i === 4 && (business.photos || []).length > 5 && (
-                  <div className="gallery-count">+{(business.photos || []).length - 5} more</div>
+                {i === 4 && allPhotos.length > 5 && (
+                  <div className="gallery-count">+{allPhotos.length - 5} more</div>
                 )}
               </div>
             ))}

@@ -27,9 +27,6 @@ export default function PremiumCard({ businesses, cycleSpeed = 5000 }) {
 
   return (
     <div className="card-premium">
-      <div className="premium-badge">
-        <span>★</span> Premium
-      </div>
       {businesses.map((biz, index) => {
         const photoUrl = biz.photos && biz.photos.length > 0 ? biz.photos[0] : null;
         const catColor = getCategoryColor(biz.category);
