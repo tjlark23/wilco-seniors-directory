@@ -1,5 +1,7 @@
 import { getBusinesses, getFeaturedBusinesses, getBusinessesByCategory } from '../../lib/getBusinesses';
 import { getCategories } from '../../lib/getCategories';
+import { getGuides } from '../../lib/getGuides';
+import { getRelocationCities } from '../../lib/getRelocation';
 import TrendingBar from '../../components/TrendingBar';
 import PremiumCard from '../../components/PremiumCard';
 import BusinessCard from '../../components/BusinessCard';
@@ -27,22 +29,56 @@ export default function SeniorsDirectoryPage() {
   const allBusinesses = getBusinesses();
   const featured = getFeaturedBusinesses();
   const categories = getCategories();
+  const guides = getGuides();
+  const relocationCities = getRelocationCities();
 
-  // Get businesses for top category rows
-  const topCategories = ['in-home-care', 'senior-living', 'pickleball', 'estate-planning', 'fitness', 'primary-care'];
-  const categoryRows = topCategories.map(slug => {
+  // Build category rows — enough for the interleaved layout
+  const categoryOrder = [
+    'in-home-care', 'senior-living',       // batch 1 (before This Week)
+    'pickleball', 'estate-planning',        // batch 2 (after This Week)
+    'fitness', 'physical-therapy',          // batch 3 (after Newsletter)
+    'restaurants', 'hearing-vision',        // batch 4 (after Relocation)
+    'dental', 'financial-advisors',         // batch 5 (after Guides)
+    'memory-care', 'medicare',              // batch 6
+    'pharmacy', 'house-cleaning',           // batch 7
+    'handyman', 'hospice',                  // batch 8
+    'senior-centers', 'elder-law',          // batch 9
+    'transportation',                       // batch 10
+  ];
+
+  const categoryRows = categoryOrder.map(slug => {
     const cat = categories.find(c => c.slug === slug);
     const businesses = getBusinessesByCategory(slug).slice(0, 4);
     return { category: cat, businesses };
   }).filter(row => row.category && row.businesses.length > 0);
 
-  // Premium spotlight businesses (first 3 featured)
-  const premiumBusinesses = featured.slice(0, 3);
+  // Split into batches for interleaving
+  const batch1 = categoryRows.slice(0, 2);
+  const batch2 = categoryRows.slice(2, 4);
+  const batch3 = categoryRows.slice(4, 6);
+  const batch4 = categoryRows.slice(6, 8);
+  const batch5 = categoryRows.slice(8, 10);
+  const remaining = categoryRows.slice(10);
 
-  // Hero right grid businesses (next 4 featured, or fill from all)
+  // Premium spotlight businesses
+  const premiumBusinesses = featured.slice(0, 3);
   const heroRightBusinesses = featured.length > 3
     ? featured.slice(3, 7)
     : allBusinesses.filter(b => !premiumBusinesses.includes(b)).slice(0, 4);
+
+  // City descriptions for relocation cards
+  const cityDescriptions = {
+    'georgetown': 'Home to Sun City Texas, the largest 55+ community in the state',
+    'round-rock': 'Urban convenience with top-tier healthcare near Austin',
+    'cedar-park': 'Hill Country access with excellent trails and recreation',
+    'leander': 'Affordable homes with MetroRail access and Hill Country views',
+    'pflugerville': 'Diverse and affordable, perfectly located near Austin',
+    'hutto': 'Small-town charm with affordable homes and community spirit',
+    'taylor': 'Historic charm and the most affordable homes in the county',
+    'liberty-hill': 'Hill Country living with scenic beauty and spacious lots',
+    'jarrell': 'Affordable and quiet at the northern edge of WilCo',
+    'florence': 'Peaceful countryside living with Hill Country lakes nearby',
+  };
 
   // Schema
   const collectionSchema = generateCollectionPageSchema(
@@ -68,7 +104,7 @@ export default function SeniorsDirectoryPage() {
       <div className="directory-page">
         <TrendingBar />
 
-        {/* Hero Section - Premium Spotlight */}
+        {/* ══════════ 1. Hero Section ══════════ */}
         <div className="spotlight-section">
           <div className="spotlight-header">
             <div className="spotlight-label">
@@ -90,8 +126,8 @@ export default function SeniorsDirectoryPage() {
           </div>
         </div>
 
-        {/* Category Rows */}
-        {categoryRows.map(({ category, businesses }) => (
+        {/* ══════════ 2. First 2 Category Rows ══════════ */}
+        {batch1.map(({ category, businesses }) => (
           <CategoryRow
             key={category.slug}
             title={category.name}
@@ -101,7 +137,207 @@ export default function SeniorsDirectoryPage() {
           />
         ))}
 
-        {/* Relocation Banner */}
+        {/* ══════════ 3. This Week in Senior Life ══════════ */}
+        <div className="content-break this-week-section">
+          <div className="content-break-inner">
+            <h2 className="content-break-title">This Week in Senior Life</h2>
+            <p className="content-break-subtitle">Events, tips, and stories from the WilCo senior community</p>
+
+            <div className="this-week-grid">
+              {/* Card 1: Upcoming Events */}
+              <div className="tw-card tw-card-events">
+                <div className="tw-card-accent" style={{ backgroundColor: 'var(--orange)' }} />
+                <div className="tw-card-body">
+                  <div className="tw-card-icon">📅</div>
+                  <h3 className="tw-card-title">Senior Events This Week</h3>
+                  <div className="tw-event-list">
+                    <div className="tw-event">
+                      <div className="tw-event-date">
+                        <span className="tw-event-month">FEB</span>
+                        <span className="tw-event-day">18</span>
+                      </div>
+                      <div className="tw-event-info">
+                        <div className="tw-event-name">Medicare Q&A at Georgetown Senior Center</div>
+                        <div className="tw-event-meta">10:00 AM &middot; Free</div>
+                      </div>
+                    </div>
+                    <div className="tw-event">
+                      <div className="tw-event-date">
+                        <span className="tw-event-month">FEB</span>
+                        <span className="tw-event-day">20</span>
+                      </div>
+                      <div className="tw-event-info">
+                        <div className="tw-event-name">Round Rock Senior Pickleball Mixer</div>
+                        <div className="tw-event-meta">8:00 AM &middot; Clay Madsen Rec Center</div>
+                      </div>
+                    </div>
+                    <div className="tw-event">
+                      <div className="tw-event-date">
+                        <span className="tw-event-month">FEB</span>
+                        <span className="tw-event-day">22</span>
+                      </div>
+                      <div className="tw-event-info">
+                        <div className="tw-event-name">Estate Planning Workshop</div>
+                        <div className="tw-event-meta">2:00 PM &middot; Cedar Park Library</div>
+                      </div>
+                    </div>
+                  </div>
+                  <Link href="/seniors/search?q=events" className="tw-card-link">View all events →</Link>
+                </div>
+              </div>
+
+              {/* Card 2: Tip of the Week */}
+              <div className="tw-card tw-card-tip">
+                <div className="tw-card-accent" style={{ backgroundColor: 'var(--blue)' }} />
+                <div className="tw-card-body">
+                  <div className="tw-card-icon">💡</div>
+                  <h3 className="tw-card-title">5 Ways to Stay Active This Winter</h3>
+                  <p className="tw-card-text">
+                    Central Texas winters are mild, but shorter days can make it tempting to stay indoors. Try
+                    morning walks at Garey Park, join a weekday pickleball group, or check out the fitness classes
+                    at your local rec center. Many WilCo gyms and studios offer senior discounts on monthly memberships.
+                  </p>
+                  <Link href="/seniors/pickleball" className="tw-card-link">Explore active lifestyle →</Link>
+                </div>
+              </div>
+
+              {/* Card 3: Community Spotlight */}
+              <div className="tw-card tw-card-spotlight">
+                <div className="tw-card-accent" style={{ backgroundColor: 'var(--green)' }} />
+                <div className="tw-card-body">
+                  <div className="tw-card-icon">👥</div>
+                  <h3 className="tw-card-title">Community Spotlight</h3>
+                  <p className="tw-card-text">
+                    Every week we highlight someone making a difference in the WilCo senior community &mdash;
+                    volunteers, business owners, activity organizers, and neighbors who go above and beyond.
+                    Know someone who deserves recognition?
+                  </p>
+                  <Link href="/seniors/get-listed" className="tw-card-link">Nominate someone →</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ══════════ 4. Next 2 Category Rows ══════════ */}
+        {batch2.map(({ category, businesses }) => (
+          <CategoryRow
+            key={category.slug}
+            title={category.name}
+            count={getBusinessesByCategory(category.slug).length}
+            categorySlug={category.slug}
+            businesses={businesses}
+          />
+        ))}
+
+        {/* ══════════ 5. Newsletter Signup Banner ══════════ */}
+        <NewsletterCTA variant="inline" />
+
+        {/* ══════════ 6. Next 2 Category Rows ══════════ */}
+        {batch3.map(({ category, businesses }) => (
+          <CategoryRow
+            key={category.slug}
+            title={category.name}
+            count={getBusinessesByCategory(category.slug).length}
+            categorySlug={category.slug}
+            businesses={businesses}
+          />
+        ))}
+
+        {/* ══════════ 7. Relocating to Williamson County? ══════════ */}
+        <div className="content-break relocation-section">
+          <div className="content-break-inner">
+            <div className="relocation-header">
+              <div>
+                <h2 className="content-break-title">🏡 Relocating to Williamson County?</h2>
+                <p className="content-break-subtitle">Explore 10 cities where seniors are building their next chapter</p>
+              </div>
+              <Link href="/seniors/relocating" className="btn-primary">Full Relocation Guide →</Link>
+            </div>
+
+            <div className="relocation-city-grid">
+              {relocationCities.map(city => (
+                <Link
+                  key={city.slug}
+                  href={`/seniors/relocating/${city.slug}`}
+                  className="relocation-city-card"
+                >
+                  <h3 className="relocation-city-name">{city.name}</h3>
+                  <p className="relocation-city-desc">{cityDescriptions[city.slug] || ''}</p>
+                  {city.highlights && city.highlights.length > 0 && (
+                    <span className="relocation-city-highlight">{city.highlights[0]}</span>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ══════════ 8. Next 2 Category Rows ══════════ */}
+        {batch4.map(({ category, businesses }) => (
+          <CategoryRow
+            key={category.slug}
+            title={category.name}
+            count={getBusinessesByCategory(category.slug).length}
+            categorySlug={category.slug}
+            businesses={businesses}
+          />
+        ))}
+
+        {/* ══════════ 9. Guides & Resources ══════════ */}
+        <div className="content-break guides-section">
+          <div className="content-break-inner">
+            <div className="guides-header">
+              <div>
+                <h2 className="content-break-title">Guides &amp; Resources</h2>
+                <p className="content-break-subtitle">In-depth articles to help you navigate senior life in WilCo</p>
+              </div>
+            </div>
+
+            <div className="guides-grid">
+              {guides.map(guide => (
+                <Link
+                  key={guide.slug}
+                  href={`/seniors/guides/${guide.slug}`}
+                  className="guide-card"
+                >
+                  <div className="guide-card-img">
+                    <img src={guide.heroImage} alt={guide.title} />
+                  </div>
+                  <div className="guide-card-body">
+                    <span className="guide-card-category">{guide.categoryName}</span>
+                    <h3 className="guide-card-title">{guide.title}</h3>
+                    <p className="guide-card-excerpt">{guide.excerpt}</p>
+                    <span className="guide-card-meta">{guide.readTime}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ══════════ 10. Remaining Category Rows ══════════ */}
+        {batch5.map(({ category, businesses }) => (
+          <CategoryRow
+            key={category.slug}
+            title={category.name}
+            count={getBusinessesByCategory(category.slug).length}
+            categorySlug={category.slug}
+            businesses={businesses}
+          />
+        ))}
+
+        {remaining.map(({ category, businesses }) => (
+          <CategoryRow
+            key={category.slug}
+            title={category.name}
+            count={getBusinessesByCategory(category.slug).length}
+            categorySlug={category.slug}
+            businesses={businesses}
+          />
+        ))}
+
+        {/* ══════════ 11. Bottom CTA Blocks ══════════ */}
         <div className="relocation-banner">
           <div className="relocation-banner-content">
             <div className="relocation-banner-title">🏡 Thinking about moving to WilCo?</div>
@@ -110,10 +346,7 @@ export default function SeniorsDirectoryPage() {
           <Link href="/seniors/relocating" className="btn-primary">Explore Relocation Guide →</Link>
         </div>
 
-        {/* Newsletter CTA */}
         <NewsletterCTA variant="inline" />
-
-        {/* CTA Banner */}
         <CTABanner />
       </div>
     </>
