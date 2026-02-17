@@ -2,6 +2,7 @@
 import { useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import ListingCard from '../../../components/ListingCard';
 import NewsletterCTA from '../../../components/NewsletterCTA';
 
 export default function SearchPageClient({ businesses, guides }) {
@@ -74,27 +75,7 @@ export default function SearchPageClient({ businesses, guides }) {
           <div className="results-main">
             {/* Business results */}
             {(activeTab === 'all' || activeTab === 'businesses') && results.businesses.map(b => (
-              <Link key={b.slug} href={`/seniors/directory/${b.slug}`} className="result-business" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="biz-logo" style={{ background: '#f0f4ff', color: 'var(--blue)' }}>
-                  {b.name.split(' ').map(w => w[0]).slice(0, 2).join('')}
-                </div>
-                <div className="biz-content">
-                  <div className="biz-name-row">
-                    <div className="biz-name">{b.name}</div>
-                    {b.partner && <div className="partner-badge">Partner</div>}
-                  </div>
-                  <div className="biz-category">{b.categoryName || b.category} · {b.city}</div>
-                  <div className="biz-rating">
-                    <span className="stars">{'★'.repeat(Math.floor(b.rating || 0))}{'☆'.repeat(5 - Math.floor(b.rating || 0))}</span> {b.rating} ({b.reviewCount} reviews)
-                  </div>
-                  <div className="biz-desc">{b.shortDescription || ''}</div>
-                  {b.tags && b.tags.length > 0 && (
-                    <div className="biz-tags">
-                      {b.tags.slice(0, 3).map((tag, i) => <span key={i} className="biz-tag">{tag}</span>)}
-                    </div>
-                  )}
-                </div>
-              </Link>
+              <ListingCard key={b.slug} business={b} />
             ))}
 
             {/* Guide results */}

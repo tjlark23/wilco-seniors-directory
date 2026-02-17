@@ -3,6 +3,7 @@ import { getCities, getCityBySlug } from '../../../lib/getCities';
 import { getBusinesses, getBusinessesByCategory, getBusinessesByCity } from '../../../lib/getBusinesses';
 import { getFAQsByCategory } from '../../../lib/getFAQs';
 import BusinessCard from '../../../components/BusinessCard';
+import ListingCard from '../../../components/ListingCard';
 import FAQSection from '../../../components/FAQSection';
 import NewsletterCTA from '../../../components/NewsletterCTA';
 import CTABanner from '../../../components/CTABanner';
@@ -103,9 +104,9 @@ function CategoryPageContent({ category }) {
           )}
         </div>
 
-        <div className="category-grid">
+        <div className="listing-grid">
           {businesses.map(business => (
-            <BusinessCard key={business.slug} business={business} />
+            <ListingCard key={business.slug} business={business} />
           ))}
         </div>
 
