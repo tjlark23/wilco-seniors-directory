@@ -11,7 +11,6 @@ const categories = [
   { label: 'Active Lifestyle', slug: '/seniors/pickleball' },
   { label: 'Financial & Legal', slug: '/seniors/estate-planning' },
   { label: 'Dining', slug: '/seniors/restaurants' },
-  { label: 'Community', slug: '/seniors/senior-centers' },
 ];
 
 const cities = [
