@@ -705,7 +705,7 @@ a { color: inherit; text-decoration: none; }
     gap: 40px;
 }
 .footer-brand { display: flex; flex-direction: column; gap: 14px; }
-.footer-logo-img { height: 30px; width: auto; display: block; }
+.footer-logo-img { height: 32px; width: auto; max-width: 180px; display: block; object-fit: contain; object-position: left; }
 .footer-brand-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 280px; }
 .footer-col-title { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; margin-bottom: 14px; color: #fff; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
