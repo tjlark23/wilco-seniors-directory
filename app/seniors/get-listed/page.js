@@ -76,14 +76,15 @@ export default function GetListedPage() {
             </div>
 
             <form
-              action="https://formsubmit.co/tj@wilcoguide.com"
+              action="https://api.web3forms.com/submit"
               method="POST"
               className="get-listed-form"
             >
-              {/* FormSubmit hidden fields */}
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_next" value="https://seniors.wilcoguide.com/seniors/get-listed/thank-you" />
-              <input type="hidden" name="_subject" value="New Get Listed Request - WilCo Seniors Directory" />
+              {/* Web3Forms hidden fields */}
+              <input type="hidden" name="access_key" value="e19dec89-2b8b-4878-b759-b07785892e56" />
+              <input type="hidden" name="redirect" value="https://seniors.wilcoguide.com/seniors/get-listed/thank-you" />
+              <input type="hidden" name="subject" value="New Get Listed Request - WilCo Seniors Directory" />
+              <input type="hidden" name="from_name" value="WilCo Seniors Directory" />
 
               <div className="form-grid">
                 <div className="form-group">
