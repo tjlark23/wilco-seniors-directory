@@ -66,6 +66,19 @@ export default function SeniorsDirectoryPage() {
     ? featured.slice(3, 7)
     : allBusinesses.filter(b => !premiumBusinesses.includes(b)).slice(0, 4);
 
+  // Popular categories with real counts
+  const popularCategories = [
+    { slug: 'senior-living', name: 'Senior Living' },
+    { slug: 'hearing-vision', name: 'Hearing & Vision' },
+    { slug: 'physical-therapy', name: 'Physical Therapy' },
+    { slug: 'restaurants', name: 'Dining' },
+    { slug: 'in-home-care', name: 'In-Home Care' },
+    { slug: 'memory-care', name: 'Memory Care' },
+  ].map(cat => ({
+    ...cat,
+    count: getBusinessesByCategory(cat.slug).length,
+  }));
+
   // City descriptions for relocation cards
   const cityDescriptions = {
     'georgetown': 'Home to Sun City Texas, the largest 55+ community in the state',
@@ -143,45 +156,21 @@ export default function SeniorsDirectoryPage() {
             <p className="content-break-subtitle">Events, tips, and stories from the WilCo senior community</p>
 
             <div className="this-week-grid">
-              {/* Card 1: Upcoming Events */}
-              <div className="tw-card tw-card-events">
+              {/* Card 1: Popular Categories */}
+              <div className="tw-card tw-card-categories">
                 <div className="tw-card-accent" style={{ backgroundColor: 'var(--orange)' }} />
                 <div className="tw-card-body">
-                  <div className="tw-card-icon">📅</div>
-                  <h3 className="tw-card-title">Senior Events This Week</h3>
-                  <div className="tw-event-list">
-                    <div className="tw-event">
-                      <div className="tw-event-date">
-                        <span className="tw-event-month">FEB</span>
-                        <span className="tw-event-day">18</span>
-                      </div>
-                      <div className="tw-event-info">
-                        <div className="tw-event-name">Medicare Q&A at Georgetown Senior Center</div>
-                        <div className="tw-event-meta">10:00 AM &middot; Free</div>
-                      </div>
-                    </div>
-                    <div className="tw-event">
-                      <div className="tw-event-date">
-                        <span className="tw-event-month">FEB</span>
-                        <span className="tw-event-day">20</span>
-                      </div>
-                      <div className="tw-event-info">
-                        <div className="tw-event-name">Round Rock Senior Pickleball Mixer</div>
-                        <div className="tw-event-meta">8:00 AM &middot; Clay Madsen Rec Center</div>
-                      </div>
-                    </div>
-                    <div className="tw-event">
-                      <div className="tw-event-date">
-                        <span className="tw-event-month">FEB</span>
-                        <span className="tw-event-day">22</span>
-                      </div>
-                      <div className="tw-event-info">
-                        <div className="tw-event-name">Estate Planning Workshop</div>
-                        <div className="tw-event-meta">2:00 PM &middot; Cedar Park Library</div>
-                      </div>
-                    </div>
+                  <div className="tw-card-icon">📂</div>
+                  <h3 className="tw-card-title">Popular Categories</h3>
+                  <div className="tw-category-list">
+                    {popularCategories.map(cat => (
+                      <Link key={cat.slug} href={`/seniors/${cat.slug}`} className="tw-category-item">
+                        <span className="tw-category-name">{cat.name}</span>
+                        <span className="tw-category-count">{cat.count} businesses</span>
+                      </Link>
+                    ))}
                   </div>
-                  <Link href="/seniors/search?q=events" className="tw-card-link">View all events →</Link>
+                  <Link href="/seniors" className="tw-card-link">Browse all categories →</Link>
                 </div>
               </div>
 
