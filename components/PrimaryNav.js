@@ -5,7 +5,7 @@ export default function PrimaryNav() {
     <nav className="primary-nav">
       <a href="https://www.wilcoguide.com" className="nav-logo">
         <img
-          src="/images/wilco-guide-logo.png"
+          src="/images/wilco-guide-logo-outline.png"
           alt="WilCo Guide"
           className="nav-logo-img"
         />
